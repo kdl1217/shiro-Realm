@@ -1,0 +1,59 @@
+group 'com.kong.shiro'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        maven { url "http://121.40.157.200:8044/content/groups/public/" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.+")
+    }
+    ext{
+        shiroVersion: "1.3.2"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "http://121.40.157.200:8044/content/groups/public/" }
+}
+
+
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter:1.5.+")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:1.3.6.RELEASE")
+    compile ("org.springframework.boot:spring-boot-starter-web:1.3.6.RELEASE")
+    compile 'org.springframework.boot:spring-boot-starter-data-redis:2.0.2.RELEASE'
+    compile("redis.clients:jedis:2.9.0")
+
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile group: 'org.apache.shiro', name: 'shiro-core', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-web', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-spring', version: '1.3.2'
+    compile group: 'org.apache.shiro', name: 'shiro-ehcache', version: '1.3.2'
+    compile ("org.apache.tomcat.embed:tomcat-embed-jasper")
+
+    compile("c3p0:c3p0:0.9.1.2")
+    runtime("mysql:mysql-connector-java:5.1.40")
+    compile("com.alibaba:fastjson:1.2.24")
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:unchecked"
+        options.encoding = "UTF-8"
+    }
+}
+
+bootRun{
+    systemProperties System.getProperties()
+}
+
+defaultTasks "assemble"

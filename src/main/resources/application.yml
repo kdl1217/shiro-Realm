@@ -1,0 +1,42 @@
+# Tomcat
+server.port: 1217
+
+# spring
+spring:
+    profiles.active: dev
+    resources.cache-period: 7200
+    datasource:
+        # see more properties at http://www.mchange.com/projects/c3p0/#configuration_properties
+        type: com.mchange.v2.c3p0.ComboPooledDataSource
+        url: jdbc:mysql://127.0.0.1:3306/gmmcdev?characterEncoding=utf8&useSSL=true
+        username: root
+        password: 123456
+        driver-class-name : com.mysql.jdbc.Driver
+        min-idle: 8
+        checkoutTimeout: 30000
+        acquireIncrement: 100
+        idleConnectionTestPeriod: 30
+        initialPoolSize: 100
+        maxIdleTime: 30
+        maxPoolSize: 500
+        minPoolSize: 100
+        maxStatements: 0
+    jpa:
+        show-sql: false
+        hibernate:
+            # Hibernate DDL  auto: create, create-drop, update, validate
+            ddl-auto: validate
+            naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+            properties:
+                hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+    redis:
+        host: 127.0.0.1
+        port: 6379
+        database: 0
+
+# Logging level (TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)
+logging:
+    level:
+        org.hibernate: WARN
+        org.springframework: WARN
+    file: shiro-Realm.log
